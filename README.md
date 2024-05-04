@@ -1,5 +1,5 @@
 Technology Used :- 
-React,Nodjs,Express,MongoDg 
+React,Nodjs,Express,MongoDB 
 
 For Run Frontend:-
 1. Globally npm i
