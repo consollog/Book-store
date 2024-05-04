@@ -1,16 +1,46 @@
 import React from 'react'
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 
 const Login = () => {
+    const locations = useLocation();
+    const navigator = useNavigate();
+    const form = locations.state?.form?.pathname || "/"
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm()
 
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = async (data) => {
+        const userinfo = {
+            email: data.email,
+            password: data.password
+        }
+        await axios.post("http://localhost:3000/user/login", userinfo)
+            .then((res) => {
+                console.log(res);
+                if (res.data) {
+                    toast.success('Login Successfully!');
+                    document.getElementById("my_modal_3").close()
+                    navigator(form, { replace: true })
+                    setTimeout(() => {
+                        window.location.reload();
+                        localStorage.setItem("user", JSON.stringify(res.data.user))
+                    }, 2000);
+                }
+
+
+            }).catch((errors) => {
+                if (errors.response) {
+                    toast.error("Error:" + errors.response.data.message);
+                }
+            })
+    }
+
 
     return (
         <div>
