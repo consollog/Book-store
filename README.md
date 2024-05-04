@@ -7,4 +7,4 @@ For Run Frontend:-
 
 For Run Backend:-
 1. Globally npm i
-2. cd Frontend npm i
+2. cd Backend npm i
